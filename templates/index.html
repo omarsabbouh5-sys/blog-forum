@@ -6,6 +6,18 @@
 </head>
 <body>
     <h1>Bienvenue sur notre Blog / Forum !</h1>
-    <p>Cette page est maintenant générée à partir d'un fichier HTML externe 🎉</p>
+    <hr>
+    <h2>Derniers articles :</h2>
+
+    {% for article in articles %}
+        <article>
+            <h3>{{ article['titre'] }}</h3>
+            <p><small>Publié par <strong>{{ article['nom_utilisateur'] }}</strong> dans <em>{{ article['categorie_nom'] }}</em> le {{ article['date_creation'] }}</small></p>
+            <p>{{ article['contenu'] }}</p>
+        </article>
+        <hr>
+    {% else %}
+        <p>Aucun article publié pour le moment.</p>
+    {% endfor %}
 </body>
 </html>
