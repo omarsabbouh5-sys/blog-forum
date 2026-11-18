@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 from database import get_db_connection
 
 app = Flask(__name__)
@@ -16,5 +16,23 @@ def accueil():
     conn.close()
     return render_template('index.html', articles=articles)
 
+@app.route('/create', methods=('GET', 'POST'))
+def create():
+    conn = get_db_connection()
+    if request.method == 'POST':
+        # Extraction des données envoyées par le formulaire HTML
+        titre = request.form['titre']
+        contenu = request.form['contenu']
+        categorie_id = request.form['categorie_id']
+        conn.execute('''
+            INSERT INTO articles (titre, contenu, utilisateur_id, categorie_id)
+            VALUES (?, ?, 1, ?)
+        ''', (titre, contenu, categorie_id))
+        conn.commit()
+        conn.close()
+        return redirect(url_for('accueil'))
+    categories = conn.execute('SELECT * FROM categories').fetchall()
+    conn.close()
+    return render_template('create.html', categories=categories)
 if __name__ == '__main__':
     app.run(debug=True)

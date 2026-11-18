@@ -5,19 +5,35 @@
     <title>Blog / Forum Communautaire</title>
 </head>
 <body>
-    <h1>Bienvenue sur notre Blog / Forum !</h1>
-    <hr>
-    <h2>Derniers articles :</h2>
+    <header>
+        <h1>Bienvenue sur notre Blog / Forum !</h1>
+        <!-- Bouton d'action redirigeant vers la fonction 'create' de app.py -->
+         <nav>
+            <a href="{{ url_for('create') }}">➕ Publier un nouvel article</a>
+        </nav>
+    </header>
 
-    {% for article in articles %}
-        <article>
-            <h3>{{ article['titre'] }}</h3>
-            <p><small>Publié par <strong>{{ article['nom_utilisateur'] }}</strong> dans <em>{{ article['categorie_nom'] }}</em> le {{ article['date_creation'] }}</small></p>
-            <p>{{ article['contenu'] }}</p>
-        </article>
-        <hr>
-    {% else %}
-        <p>Aucun article publié pour le moment.</p>
-    {% endfor %}
+    <hr>
+
+    <main>
+        
+        <h2>Derniers articles :</h2>
+        
+        {% for article in articles %}
+            <article>
+                <h3>{{ article['titre'] }}</h3>
+                <p>
+                    <small>
+                        Publié par <strong>{{ article['nom_utilisateur'] }}</strong> dans <em>{{ article['categorie_nom'] }}</em> le {{ article['date_creation'] }}</small></p>
+                
+                    </small> 
+                </p>
+                <p>{{ article['contenu'] }}</p>
+            </article>
+            <hr>
+        {% else %}
+            <p>Aucun article publié pour le moment.</p>
+        {% endfor %}
+    </main>
 </body>
 </html>

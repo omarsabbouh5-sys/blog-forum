@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Publier un article - Blog / Forum</title>
+</head>
+<body>
+    <header>
+        <h1>Écrire un nouvel article</h1>
+        <nav>
+            <a href="{{ url_for('accueil') }}">← Retour à l'accueil</a>
+        </nav>
+    </header>
+
+    <hr>
+
+    <main>
+        <!-- Formulaire envoyant les données en POST vers la route Python actuelle (/create) -->
+        <form method="POST">
+            
+            
+            <div>
+                <label for="titre"><strong>Titre de l'article :</strong></label><br>
+                <input type="text" id="titre" name="titre" placeholder="Ex: Les nouveautés de Python..." required>
+            </div>
+            <br>
+
+            <div>
+                <label for="categorie_id"><strong>Catégorie :</strong></label><br>
+                <select id="categorie_id" name="categorie_id" required>
+                    <!-- Boucle Jinja générant une option par catégorie présente en base -->
+                    {% for categorie in categories %}
+                        <option value="{{ categorie['id'] }}">{{ categorie['nom'] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <br>
+
+            <div>
+                <label for="contenu"><strong>Contenu de l'article :</strong></label><br>
+                <textarea id="contenu" name="contenu" rows="8" cols="50" placeholder="Rédigez votre article ici..." required></textarea>
+            </div>
+            <br>
+
+            <!-- Bouton de soumission -->
+            <button type="submit">Publier l'article</button>
+        </form>
+    </main>
+</body>
+</html>
